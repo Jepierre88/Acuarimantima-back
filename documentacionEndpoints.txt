@@ -1,0 +1,84 @@
+POST /signup
+Este endpoint se utiliza para registrar un nuevo usuario en el sistema.
+
+	URL: /signup
+	Método: POST
+	Descripción: Crea un nuevo usuario con la información proporcionada.
+
+Solicitud:
+	Cuerpo de la solicitud (application/json):
+	Se espera un objeto con la siguiente estructura:
+		{
+  			"email": "user@example.com",
+  			"username": "user123",
+  			"firstName": "John",
+  			"lastName": "Doe",
+  			"password": "password123"
+		}
+Propiedades:
+	email (string, requerido): El correo electrónico del usuario usado para ingresar al sistema.
+	username (string, requerido): Usuario usado para ingresar al sistema.
+	firstName (string, requerido): El nombre del usuario.
+	lastName (string, requerido): El apellido del usuario.
+	password (string, requerido): La contraseña del usuario, debe tener al menos 5 caracteres.
+
+Respuesta
+	Código 200:
+		Descripción: El usuario fue creado exitosamente.
+	Cuerpo de la respuesta (application/json):
+		{
+  			"id": "12345",
+  			"email": "user@example.com",
+  			"username": "user123",
+  			"firstName": "John",
+  			"lastName": "Doe"
+		}
+Errores posibles:
+	400: La contraseña no cumple con los requisitos mínimos.
+	400: Campos requeridos faltantes.
+	401: Usuario ya registrado.
+
+2. POST /users/login
+Este endpoint se utiliza para autenticar a un usuario y generar un token JWT.
+
+	URL: /users/login
+	Método: POST
+	Descripción: Autentica a un usuario y devuelve un token JWT junto con un perfil de usuario básico.
+
+Solicitud
+	Cuerpo de la solicitud (application/json):
+	Se espera un objeto con las credenciales del usuario:
+	{
+  		"email": "user@example.com",
+  		"password": "password123"
+	}
+
+	El campo de “email” también permite ingresar el username
+
+Propiedades:
+
+	email (string, requerido): El correo electrónico o nombre de usuario del usuario.
+	password (string, requerido): La contraseña del usuario.
+
+Respuesta
+	Código 200:
+		Descripción: Autenticación exitosa.
+	Cuerpo de la respuesta (application/json):
+		{
+  			"token": "jwt-token-aqui",
+  			"user": {
+    				"email": "user@example.com",
+    				"firstName": "John",
+    				"lastName": "Doe",
+    				"realm": "user-realm"
+  				}
+		}
+Errores posibles:
+	401: Usuario no encontrado o credenciales inválidas.
+	401: El usuario ha sido eliminado.
+	401: Contraseña incorrecta.
+
+Resumen de Errores Comunes
+	400: Solicitud incorrecta (campos faltantes o inválidos).
+	401: No autorizado (usuario no encontrado, usuario eliminado, contraseña incorrecta).
+
