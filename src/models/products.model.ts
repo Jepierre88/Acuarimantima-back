@@ -1,5 +1,4 @@
-import {Entity, model, property, hasMany} from '@loopback/repository';
-import {DetailAccount} from './detail-account.model';
+import {Entity, model, property} from '@loopback/repository';
 
 @model()
 export class Products extends Entity {
@@ -26,10 +25,20 @@ export class Products extends Entity {
     type: 'boolean',
     default: false,
   })
-  eliminate?: boolean;
+  enableTaxes?: boolean;
 
-  @hasMany(() => DetailAccount)
-  detailAccounts: DetailAccount[];
+  @property({
+    type: 'number',
+    default: 0,
+  })
+  taxesPorcentaje?: number;
+
+  @property({
+    type: 'boolean',
+    default: false,
+  })
+  eliminated?: boolean;
+
 
   constructor(data?: Partial<Products>) {
     super(data);

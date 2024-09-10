@@ -56,10 +56,10 @@ export class DetailAccount extends Entity {
   })
   accountId?: number;
 
-  @property({
-    type: 'number',
-  })
-  productsId?: number;
+  // @property({
+  //   type: 'number',
+  // })
+  // productsId?: number;
 
   constructor(data?: Partial<DetailAccount>) {
     super(data);

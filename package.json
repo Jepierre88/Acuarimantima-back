@@ -49,11 +49,11 @@
     "!*/__tests__"
   ],
   "dependencies": {
-    "@loopback/authentication": "10.1.5",
+    "@loopback/authentication": "^10.1.5",
     "@loopback/boot": "^6.1.5",
-    "@loopback/core": "^6.1.2",
+    "@loopback/core": "^5.1.5",
     "@loopback/repository": "^6.1.5",
-    "@loopback/rest": "^14.0.0",
+    "@loopback/rest": "^13.1.5",
     "@loopback/rest-explorer": "^6.1.5",
     "@loopback/security": "^0.10.5",
     "@loopback/service-proxy": "^6.1.5",
@@ -62,7 +62,7 @@
     "tslib": "^2.0.0"
   },
   "devDependencies": {
-    "@loopback/authentication-jwt": "^0.15.5",
+    "@loopback/authentication-jwt": "^0.14.5",
     "@loopback/build": "^10.1.5",
     "@loopback/eslint-config": "^14.0.5",
     "@loopback/testlab": "^6.1.5",

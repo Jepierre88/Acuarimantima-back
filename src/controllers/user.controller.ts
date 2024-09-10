@@ -144,6 +144,7 @@ export class UserController {
       if (newUserRequest.password.length < 5) {
         throw new HttpErrors[400](`La contraseña debe tener una extensión mínima de 5 caracteres`)
       }
+      newUserRequest.username= newUserRequest.username.trim()
       const password = await hash(newUserRequest.password, await genSalt());
       const savedUser = await this.userRepository.create(
         _.omit(newUserRequest, 'password'),
@@ -152,7 +153,7 @@ export class UserController {
       return savedUser;
   }
 
-
+  @authenticate('jwt')
   @patch('users/{id}/changePassword')
   @response(204, {
     description: 'User PATCH success count',

@@ -10,13 +10,10 @@ export class ProductsRepository extends DefaultCrudRepository<
   ProductsRelations
 > {
 
-  public readonly detailAccounts: HasManyRepositoryFactory<DetailAccount, typeof Products.prototype.id>;
-
   constructor(
-    @inject('datasources.acuarimantima') dataSource: AcuarimantimaDataSource, @repository.getter('DetailAccountRepository') protected detailAccountRepositoryGetter: Getter<DetailAccountRepository>,
+    @inject('datasources.acuarimantima') dataSource: AcuarimantimaDataSource,
   ) {
     super(Products, dataSource);
-    this.detailAccounts = this.createHasManyRepositoryFactoryFor('detailAccounts', detailAccountRepositoryGetter,);
-    this.registerInclusionResolver('detailAccounts', this.detailAccounts.inclusionResolver);
+
   }
 }

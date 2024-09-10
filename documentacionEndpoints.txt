@@ -38,7 +38,7 @@ Errores posibles:
 	400: Campos requeridos faltantes.
 	401: Usuario ya registrado.
 
-2. POST /users/login
+POST /users/login
 Este endpoint se utiliza para autenticar a un usuario y generar un token JWT.
 
 	URL: /users/login
@@ -81,4 +81,152 @@ Errores posibles:
 Resumen de Errores Comunes
 	400: Solicitud incorrecta (campos faltantes o inválidos).
 	401: No autorizado (usuario no encontrado, usuario eliminado, contraseña incorrecta).
+
+
+Products:
+
+
+POST /products
+Crea una nueva instancia del modelo Products.
+
+	URL: /products
+	Method: POST
+	Auth Required: JWT Authentication (Bearer Token)
+
+Solicitud:
+	Cuerpo de la solicitud (application/json):
+	Se espera un objeto con la siguiente estructura:
+		{
+  			"name": "string",
+  			"value": "number",
+  			"enableTaxes": "boolean",
+  			"taxesPorcentaje": "number"
+		}
+Propiedades:
+
+	name: Nombre del producto (obligatorio, debe tener más de 3 caracteres).
+	value: Valor del producto (por defecto 0 si no se especifica).
+	enableTaxes: Indica si los impuestos están habilitados (por defecto false si no se especifica).
+	taxesPorcentaje: Porcentaje de impuesto (por defecto 0, debe ser mayor a 0 si enableTaxes es true).
+
+Respuesta
+
+	Código 200:
+		Descripción: El producto fue creado exitosamente.
+	Cuerpo de la respuesta (application/json):
+		{
+ 		 	"id": "number",
+  			"name": "string",
+  			"value": "number",
+  			"enableTaxes": "boolean",
+  			"taxesPorcentaje": "number",
+  			"eliminated": false
+		}
+Errores posibles:
+
+	400 Bad Request: Error en la validación de los datos (ejemplo: nombre del producto ya existe o el porcentaje de 			impuestos no es válido).
+
+	500 Internal Server Error: Error en el servidor al intentar crear el producto.
+
+
+GET /products
+Obtiene una lista de todas las instancias de Products.
+
+	URL: /products
+	Method: GET
+	Auth Required: No
+	Query Parameters (Opcional):
+	Puedes aplicar filtros a través de los parámetros de consulta.
+
+Respuesta
+Código 200:
+		Descripción: Retorna una lista de productos con sus relaciones (no se excluye los productos que han sido 				eliminados).
+	[
+  		{
+    			"id": "number",
+    			"name": "string",
+    			"value": "number",
+    			"enableTaxes": "boolean",
+    			"taxesPorcentaje": "number",
+    			"eliminated": "boolean"
+  		}
+	]
+
+
+GET /products/{id}
+Obtiene una instancia de Products por su ID.
+
+	URL: /products/{id}
+	Method: GET
+	Auth Required: No
+	Path Parameters:
+	id (obligatorio): ID del producto que se desea consultar.
+
+Respuesta
+
+	Código 200:
+		Descripción: Retorna el producto solicitado.
+
+	{
+  		"id": "number",
+  		"name": "string",
+  		"value": "number",
+  		"enableTaxes": "boolean",
+  		"taxesPorcentaje": "number",
+  		"eliminated": "boolean",
+	}
+
+Errores posibles:
+	404 Not Found: Producto no encontrado.
+
+
+PATCH /products/{id}
+Actualiza una instancia de Products por su ID.
+
+	URL: /products/{id}
+	Method: PATCH
+	Auth Required: JWT Authentication (Bearer Token)
+	Path Parameters:
+		id (obligatorio): ID del producto que se desea actualizar.
+Solicitud:
+	Cuerpo de la solicitud (application/json):
+	{
+  		"name": "string",
+  		"value": "number",
+  		"enableTaxes": "boolean",
+  		"taxesPorcentaje": "number"
+	}
+
+Respuesta
+Código 200:
+		Descripción: Retorna el producto con los cambios realizados.
+
+	{
+  		"id": "number",
+  		"name": "string",
+  		"value": "number",
+  		"enableTaxes": "boolean",
+  		"taxesPorcentaje": "number",
+  		"eliminated": "boolean",
+	}
+
+Errores posibles:
+	400 Bad Request: Error en la validación de los datos (ejemplo: impuesto habilitado pero porcentaje de impuestos es 0).
+
+
+DELETE /products/{id}
+Marca un producto como eliminado (eliminación lógica).
+
+	URL: /products/{id}
+	Method: DELETE
+	Auth Required: JWT Authentication (Bearer Token)
+	Path Parameters:
+		id (obligatorio): ID del producto que deseas eliminar.
+Respuesta
+
+	204 No Content: Producto marcado como eliminado exitosamente.
+	404 Not Found: Producto no encontrado.
+
+
+
 
